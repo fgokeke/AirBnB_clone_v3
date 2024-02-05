@@ -2,7 +2,7 @@
 """A simple flask app"""
 
 
-from flask import Flask
+from flask import Flask, Blueprint, jsonify, make_response
 from models import storage
 from api.v1.views import app_views
 import os
@@ -18,8 +18,12 @@ def close_storage(exception):
     storage.close
 
 
-if __name__ == "__main__":
-    host = os.getenv('HBNB_API_HOST', '0.0.0.0')
-    port = os.getenv('HBNB_API_PORT', '5000')
+@app.errorhandler(404)
+def page_not_found(error):
+    """Error not found 404"""
+    return make_response(jsonify({'error': 'Not found'}), 404)
 
-    app.run(host=host, port=port, threaded=True)
+
+if __name__ == "__main__":
+    app.run(host=os.getenv('HBNB_API_HOST', '0.0.0.0'),
+            port=int(os.getenv('HBNB_API_PORT', '5000')))

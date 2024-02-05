@@ -4,7 +4,7 @@ This module defines view functions related to the index of the API.
 """
 
 from api.v1.views import app_views
-from flask import jsonify, Flask, Blueprint
+from flask import Flask, Blueprint, jsonify
 from models import storage
 
 
